@@ -1,26 +1,26 @@
-import React from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
-
+import { useSession, signIn } from "next-auth/react";
+import {UserImage} from "./UserImage";
 const SigninBTN = () => {
   const { data: session, status } = useSession();
   return (
-    <div >
+    <div>
       {session ? (
-        <>
-          <button
-            className="rounded-md  px-3 py-1 text-sm hover:text-red-500 dark:hover:text-red-300"
-            onClick={() => signOut()}
-          >
-            Sign out
-          </button>
-        </>
+       <>
+        <UserImage
+          ImageSRC={session.user.image}
+          UserEmail={session.user.email}
+          UserName={session.user.name}
+        />
+        
+       </>
       ) : (
         <>
           <button
-            className="rounded-md  px-3 py-1 text-sm hover:text-green-500 dark:hover:text-green-300 "
+            className="border dark:border-none border-gray-300 bg-blue-500 rounded-md  px-3 py-2 text-sm  text-white  "
             onClick={() => signIn()}
+            
           >
-            Sign In Google
+            Open Account
           </button>
         </>
       )}

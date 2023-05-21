@@ -18,19 +18,21 @@ export default NextAuth({
             clientId: process.env.GITHUB_CLIENTID as string,
             clientSecret: process.env.GITHUB_SECRETKEY as string,
         }),
+       
     ],
+    
     // Session token 
     session: {
         strategy: 'jwt',
-        maxAge: 34,
+        maxAge: 3444,
     },
     // Callbacks functions 
     callbacks: {
         // When user signIn 
         signIn: async ({ user, email, profile }) => {
-            
+
             const userEmail = email || (profile?.email as string);
-            const userName = profile?.name as string;
+            const userName = profile?.name as string || "";
             // Check user existance
             const { found, user: fetcheduser } = await checkUserExistence(userEmail as string);
             // if user was sign in first sigin
@@ -51,6 +53,8 @@ export default NextAuth({
                     _id: user.id,
                     email: user.email,
                     role: user.role,
+                    name : user.name,
+                    image : user.image
                 };
             }
             return token;
