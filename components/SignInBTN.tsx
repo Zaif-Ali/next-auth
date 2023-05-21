@@ -6,11 +6,7 @@ const SigninBTN = () => {
     <div>
       {session ? (
        <>
-        <UserImage
-          ImageSRC={session.user.image}
-          UserEmail={session.user.email}
-          UserName={session.user.name}
-        />
+        <UserImage/>
         
        </>
       ) : (
