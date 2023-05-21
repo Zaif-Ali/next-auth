@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 interface Props {}
 
 const UserDropDown: NextPage<Props> = ({}) => {
-      // Rourer Hook
+  // Rourer Hook
   const router = useRouter();
   // Handle Sign out
   const handleSignOut = async () => {
@@ -25,7 +25,7 @@ const UserDropDown: NextPage<Props> = ({}) => {
   return (
     <div
       className={` 
-z-10  top-10  absolute right-0 mt-1 flex w-96 origin-top-right flex-col rounded-xl py-6 text-white shadow-lg focus:outline-none bg-gray-900 dark:bg-white`}
+z-10  top-10  absolute right-0 mt-1 flex w-72 md:w-96 origin-top-right flex-col rounded-xl py-6 text-white shadow-lg focus:outline-none bg-gray-900 dark:bg-white`}
     >
       <div className="mb-4 flex gap-4 px-6 text-sm">
         {session?.user.image && (

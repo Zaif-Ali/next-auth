@@ -36,7 +36,7 @@ export const UserImage: NextPage<Props> = ({}) => {
                   fill
                 />
               </button>
-              {isDropDown && <UserDropDown />}
+              <div>{isDropDown && <UserDropDown />}</div>
             </div>
           </>
         )}

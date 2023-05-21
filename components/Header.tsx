@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import SigninBTN from "./SignInBTN";
 import { useRouter } from "next/router";
-import {FcMenu} from 'react-icons/fc'
+import { FcMenu } from "react-icons/fc";
 interface MenuLink {
   title: string;
   url: string;
@@ -39,27 +39,35 @@ const Header: NextPage<Props> = ({}) => {
   return (
     <>
       <div className=" pb-20 ">
-        <nav className="top-0 w-full fixed backdrop-filter backdrop-blur-3xl md:backdrop-blur-lg ">
+        <nav className="top-0 w-full fixed backdrop-filter backdrop-blur-3xl md:backdrop-blur-lg">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            {/* Main name */}
             <Link
               href={"/"}
               className="self-center text-2xl font-bold whitespace-nowrap text-gray-900 dark:text-white"
             >
               Final
             </Link>
-
-            <button
-              data-collapse-toggle="navbar-default"
-              onClick={toggleNavbar}
-              type="button"
-              className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-2 dark:focus:ring-0 ring-gray-300 "
-              aria-controls="navbar-default"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <FcMenu className="w-6 h-6"/>
-            
-            </button>
+            {/* create account or user avatar this one is only visible on mobiles hidden on larger  machines*/}
+            <div className="flex ">
+              {" "}
+              <div className="md:self-center md:hidden">
+                <SigninBTN />
+              </div>
+              {/* main menu button  */}
+              <button
+                data-collapse-toggle="navbar-default"
+                onClick={toggleNavbar}
+                type="button"
+                className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-2 dark:focus:ring-0 ring-gray-300 "
+                aria-controls="navbar-default"
+                aria-expanded="false"
+              >
+                <span className="sr-only">Open main menu</span>
+                <FcMenu className="w-6 h-6" />
+              </button>
+            </div>
+            {/* main menu items  */}
             <div
               className={`${
                 isNavbarHidden ? "hidden" : ""
@@ -83,7 +91,8 @@ const Header: NextPage<Props> = ({}) => {
                     </Link>
                   </li>
                 ))}
-                <li className="md:self-center">
+                {/* create account or user avatar  this one is only visible on larger machines hidden on mobiles */}
+                <li className="md:self-center hidden md:block">
                   <SigninBTN />
                 </li>
               </ul>
