@@ -21,9 +21,31 @@ const UserDropDown: NextPage<Props> = ({}) => {
   const { data: session } = useSession();
   // Links whose shown in the dropdown
   const menuLinks = [
-    { title: "Profile", url: "/profile", icon: <AiOutlineUser /> },
-    { title: "Setting", url: "/setting", icon: <FiSettings /> },
+    {
+      title: "Profile",
+      url: "/profile",
+      icon: <AiOutlineUser />,
+      isProtected: false,
+    },
+    {
+      title: "Dashboard",
+      url: "/admin/dashboard",
+      icon: <AiOutlineUser />,
+      isProtected: true,
+    },
+    {
+      title: "Setting",
+      url: "/setting",
+      icon: <FiSettings />,
+      isProtected: false,
+    },
   ];
+
+  // Filter the menuLinks array based on the user's role and the isProtected property
+  const filteredMenuLinks = menuLinks.filter(
+    (link) => !link.isProtected || (session && session.user.role === "admin")
+  );
+
   return (
     <div
       className={` 
@@ -48,17 +70,21 @@ z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-co
         </div>
       </div>
       <div className="flex flex-col ">
-        {menuLinks.map((link, indes) => {
+        {/* DropDown  */}
+        {filteredMenuLinks.map((link, indes) => {
           return (
-            <button
+            <Link
+              href={link.url}
               key={indes}
               className="inline-flex items-center justify-between gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500 hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300"
             >
-              <Link href={link.url}>{link.title}</Link>
-              <span className="text-lg text-gray-400 dark:text-gray-500">{link.icon}</span>
-            </button>
+              {link.title}
+              <span className="text-lg text-gray-400 dark:text-gray-500">
+                {link.icon}
+              </span>
+            </Link>
           );
-        })}
+        })} 
         <button
           className="inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500 hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300"
           onClick={handleSignOut}
