@@ -3,9 +3,9 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import { createUser } from '@/lib/CreateNewUser';
+import type { NextAuthOptions } from 'next-auth';
 
-
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     // Secret String for tokens 
     secret: process.env.NEXTAUTH_SECRET as string,
     // Providers 
@@ -18,9 +18,9 @@ export default NextAuth({
             clientId: process.env.GITHUB_CLIENTID as string,
             clientSecret: process.env.GITHUB_SECRETKEY as string,
         }),
-       
+
     ],
-    
+
     // Session token 
     session: {
         strategy: 'jwt',
@@ -41,20 +41,22 @@ export default NextAuth({
                 // console.log('New user created:', createdUser);
                 user.role = createdUser.role;
                 return true;
+            } else {
+                // set user role in the user.role for acessing in the pages
+                user.role = fetcheduser?.role as string;
+                return true;
             }
-            // set user role in the user.role for acessing in the pages
-            user.role = fetcheduser?.role as string;
-            return true;
         },
         // for setting the jwt tokens
         jwt: async ({ token, user }) => {
             if (user) {
+                token.role = user.role;
                 token.user = {
                     _id: user.id,
                     email: user.email,
                     role: user.role,
-                    name : user.name,
-                    image : user.image
+                    name: user.name,
+                    image: user.image
                 };
             }
             return token;
@@ -67,4 +69,6 @@ export default NextAuth({
             return session;
         }
     },
-});
+};
+
+export default NextAuth(authOptions);

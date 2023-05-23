@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import SigninBTN from "./SignInBTN";
 import { useRouter } from "next/router";
 import { FcMenu } from "react-icons/fc";
+
 interface MenuLink {
   title: string;
   url: string;
@@ -14,6 +15,7 @@ interface MenuLink {
 interface Props {}
 
 const Header: NextPage<Props> = ({}) => {
+  
   const [isNavbarHidden, setIsNavbarHidden] = useState(true);
   const router = useRouter();
   const { data: session } = useSession();

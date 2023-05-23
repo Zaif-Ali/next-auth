@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import { FiSettings } from "react-icons/fi";
+import { AiOutlineUser } from "react-icons/ai";
+import React from "react";
 interface Props {}
 
 const UserDropDown: NextPage<Props> = ({}) => {
@@ -16,16 +18,16 @@ const UserDropDown: NextPage<Props> = ({}) => {
     router.push("/");
   };
   // Get user data
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   // Links whose shown in the dropdown
   const menuLinks = [
-    { title: "Setting", url: "/setting" },
-    { title: "Profile", url: "/profile" },
+    { title: "Profile", url: "/profile", icon: <AiOutlineUser /> },
+    { title: "Setting", url: "/setting", icon: <FiSettings /> },
   ];
   return (
     <div
       className={` 
-z-10  top-10  absolute right-0 mt-1 flex w-72 md:w-96 origin-top-right flex-col rounded-xl py-6 text-white shadow-lg focus:outline-none bg-gray-900 dark:bg-white`}
+z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-col rounded-xl py-6 text-white shadow-lg focus:outline-none bg-gray-900 dark:bg-white`}
     >
       <div className="mb-4 flex gap-4 px-6 text-sm">
         {session?.user.image && (
@@ -50,9 +52,10 @@ z-10  top-10  absolute right-0 mt-1 flex w-72 md:w-96 origin-top-right flex-col 
           return (
             <button
               key={indes}
-              className="inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500 hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300"
+              className="inline-flex items-center justify-between gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500 hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300"
             >
               <Link href={link.url}>{link.title}</Link>
+              <span className="text-lg text-gray-400 dark:text-gray-500">{link.icon}</span>
             </button>
           );
         })}
