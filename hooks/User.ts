@@ -12,7 +12,7 @@ const useUser = () => {
     const GetUser = async (email: string) => {
         setisloading(true);
         try {
-            const response = await axios.post("/api/users/GetUser", { email });
+            const response = await axios.post("/api/user/GetUser", { email });
             const data = response.data;
             setuser(data.user);
         } catch (error: any) {
