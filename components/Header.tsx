@@ -41,7 +41,7 @@ const Header: NextPage<Props> = ({}) => {
   return (
     <>
       <div className=" pb-20 ">
-        <nav className="top-0 w-full fixed backdrop-filter backdrop-blur-3xl md:backdrop-blur-lg">
+        <nav className="top-0 w-full fixed backdrop-filter backdrop-blur-3xl md:backdrop-blur-lg z-50">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             {/* Main name */}
             <Link
