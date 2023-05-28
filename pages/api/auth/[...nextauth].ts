@@ -40,10 +40,12 @@ export const authOptions: NextAuthOptions = {
                 const createdUser = await createUser(userEmail as string, userName, user.image as string);
                 // console.log('New user created:', createdUser);
                 user.role = createdUser.role;
+            
                 return true;
             } else {
                 // set user role in the user.role for acessing in the pages
                 user.role = fetcheduser?.role as string;
+                 
                 return true;
             }
         },

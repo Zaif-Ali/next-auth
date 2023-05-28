@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface User extends Document {
+export interface IUser extends Document {
     name: string;
     email: string;
     emailVerified : boolean;
@@ -8,7 +8,7 @@ export interface User extends Document {
     role: string;
     gender: string;
 }
-export interface AdapterUser extends User {
+export interface AdapterUser extends IUser {
     id: string;
   }
   

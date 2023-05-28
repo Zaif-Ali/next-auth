@@ -1,13 +1,13 @@
 
 // api/users/GetUser
 import checkUserExistence from '@/lib/UserExistance';
-import { User } from '@/types/Global';
+import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
     error?: string | null,
     message?: string | null,
-    user?: User | null,
+    user?: IUser | null,
     found?: boolean,
     email? : string | null;
 }

@@ -35,7 +35,7 @@ const UserDropDown: NextPage<Props> = ({}) => {
     },
     {
       title: "Setting",
-      url: "/setting",
+      url: "/user/setting",
       icon: <FiSettings />,
       isProtected: false,
     },
@@ -53,7 +53,7 @@ z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-co
     >
       <div className="mb-4 flex gap-4 px-6 text-sm">
         {session?.user.image && (
-          <div className="relative h-10 w-10">
+          <div className="relative h-10 w-10 ">
             <Image
               src={session?.user.image}
               alt={session?.user.name}

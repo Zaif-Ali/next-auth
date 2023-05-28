@@ -1,7 +1,7 @@
-import { User } from '@/types/Global';
+import { IUser } from '@/types/Global';
 import { Schema, model, models } from 'mongoose';
 
-const userSchema = new Schema<User>({
+const userSchema = new Schema<IUser>({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     image: { type: String, required: true },
@@ -14,10 +14,10 @@ const userSchema = new Schema<User>({
     gender: {
         type: String,
         enum: ["male", "female", "other"],
-        default : "other"
+        default: "other"
     },
 });
 
-const UserModel = models.User || model<User>('User', userSchema);
+const UserModel = models.User || model<IUser>('User', userSchema);
 
 export default UserModel;
