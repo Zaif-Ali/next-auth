@@ -69,8 +69,9 @@ export const authOptions: NextAuthOptions = {
                 session.user = token.user as any;
             }
             return session;
-        }
+        },
     },
+    
 };
 
 export default NextAuth(authOptions);

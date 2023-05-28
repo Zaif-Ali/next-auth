@@ -1,14 +1,15 @@
 // api/users/UpdateUser
 import checkUserExistence from '@/lib/UserExistance';
-import User from '@/model/User';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { UpdateQuery  } from 'mongoose';
-
+import clientPromise from '@/database/connection';
+import { UpdateResult } from 'mongodb';
+// Response Type
 type Data = {
     error?: string | null,
     message?: string | null,
     success: boolean
+    user?: IUser | null
 }
 
 export default async function handler(
@@ -29,15 +30,18 @@ export default async function handler(
                         success: false
                     })
                 }
-                
+
                 // if the user is found
                 // Update the user with the changed fields from formData
-                const updatedUser = await updateUser(user, formData);
-                console.log(updatedUser);
+                await updateUser(user, formData);
+                // Get the user again from the database
+                const { user: update } = await checkUserExistence(email) as { user: IUser };
+               // Send Response 
                 return response.status(200).json({
                     success: true,
                     error: null,
-                    message: "updated"
+                    message: "updated",
+                    user: update
                 })
             } catch (error: any) {
                 // if any error occur 
@@ -54,29 +58,40 @@ export default async function handler(
 }
 
 
-
-async function updateUser(user: IUser, formData: Partial<IUser>): Promise<IUser> {
+async function updateUser(user: IUser, formData: Partial<IUser>) {
+    // Create an object to store the fields to be updated
     const updatedFields: Partial<IUser> = {};
+
+    // Get the keys of the formData object
     const keys = Object.keys(formData);
     console.log(keys);
+
+    // Iterate over the keys and compare the values with the current user
     for (const key of keys) {
-        console.log(key);
-        
-      if (formData[key as keyof IUser] !== user[key as keyof IUser]) {
-        updatedFields[key as keyof IUser] = formData[key as keyof IUser];
-      }
+        // Check if the value is different from the current user's value
+        if (formData[key as keyof IUser] !== user[key as keyof IUser]) {
+            // Store the updated value in the updatedFields object
+            updatedFields[key as keyof IUser] = formData[key as keyof IUser];
+        }
     }
-  
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: user._id },
-      { $set: updatedFields },
-      { new: true }
+
+    // Establish a connection to the database
+    const client = await clientPromise;
+    const db = client.db();
+
+    // Update the user in the database using the updateOne method
+    const updateResult: UpdateResult = await db.collection('users').updateOne(
+        { _id: user._id }, // Specify the filter to match the user
+        { $set: updatedFields }, // Set the updated fields
     );
-  
-    if (!updatedUser) {
-      throw new Error('Failed to update user');
+
+    // Check if the update was successful
+    if (updateResult.modifiedCount !== 1) {
+        throw new Error('Failed to update user');
     }
-  
-    return updatedUser;
-  }
-  
+
+    // Return the update result
+    return updateResult;
+}
+
+
