@@ -34,6 +34,8 @@ const useUser = () => {
         try {
             const response = await axios.post("/api/user/UpdateUser", { email, formData: changedFields });
             const data = response.data;
+            setError(data.error)
+            setisloading(false);
         } catch (error: any) {
             setError(error.message);
         } finally {

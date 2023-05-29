@@ -1,7 +1,7 @@
 import Wrapper from "@/layout/Wrapper";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import Image from "next/image";
 import useUser from "@/hooks/User";
 interface Props {}
@@ -22,7 +22,7 @@ const Setting: NextPage<Props> = ({}) => {
               </h5>
               <div className="flex flex-col pb-3 space-y-3">
                 <DisableInput />
-              <UserInput />
+                <UserInput />
               </div>
             </div>
           </div>
@@ -41,37 +41,46 @@ interface FormData {
 
 export const UserInput = () => {
   const { data: session } = useSession();
-  const { UpdateUser } = useUser();
+  const { UpdateUser, isloading } = useUser();
+  
   const initialFormData: FormData = {
-    name: session?.user.name ?? "",
-    gender: "Other",
+    name: session?.user.name as string,
+    gender: session?.user.gender as string,
   };
 
   const [formData, setFormData] = useState<FormData>({ ...initialFormData });
 
+  // Handle input change event
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+
+    // Update the form data with the new value
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
   };
 
+  // Handle form submission
   const handleSubmit = () => {
     const changedFields: Partial<FormData> = {};
 
+    // Iterate over the form data and compare with the initial form data
     for (const key in formData) {
       if (
         formData[key as keyof FormData] !==
         initialFormData[key as keyof FormData]
       ) {
+        // Store the changed fields in the changedFields object
         changedFields[key as keyof FormData] = formData[key as keyof FormData];
       }
     }
 
     let email = session?.user.email as string;
+
+    // If there are changed fields, call the UpdateUser function
     if (Object.keys(changedFields).length > 0) {
       UpdateUser({ email, changedFields });
     }
@@ -79,6 +88,7 @@ export const UserInput = () => {
     console.log(changedFields);
   };
 
+  // Check if the form data has changed
   const isFormChanged =
     JSON.stringify(formData) !== JSON.stringify(initialFormData);
 
@@ -86,7 +96,6 @@ export const UserInput = () => {
     <>
       <div className="pb-3">
         {/* Name */}
-
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
           Name
         </label>
@@ -119,7 +128,7 @@ export const UserInput = () => {
           className="disabled:opacity-30 bg-indigo-500 text-gray-200 dark:text-gray-100 font-semibold px-5 py-2 rounded-lg "
           onClick={handleSubmit}
         >
-          Submit
+          {isloading ? "Loading" : "Submit"}
         </button>
       </div>
     </>

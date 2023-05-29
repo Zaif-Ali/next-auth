@@ -40,12 +40,11 @@ export const authOptions: NextAuthOptions = {
                 const createdUser = await createUser(userEmail as string, userName, user.image as string);
                 // console.log('New user created:', createdUser);
                 user.role = createdUser.role;
-            
                 return true;
             } else {
                 // set user role in the user.role for acessing in the pages
                 user.role = fetcheduser?.role as string;
-                 
+                user.gender = fetcheduser?.gender as string;
                 return true;
             }
         },
@@ -53,12 +52,14 @@ export const authOptions: NextAuthOptions = {
         jwt: async ({ token, user }) => {
             if (user) {
                 token.role = user.role;
+                token.gender =  user.gender;
                 token.user = {
                     _id: user.id,
                     email: user.email,
                     role: user.role,
                     name: user.name,
-                    image: user.image
+                    image: user.image,
+                    gender : user.gender
                 };
             }
             return token;

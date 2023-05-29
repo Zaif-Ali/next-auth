@@ -10,5 +10,5 @@ export interface IUser extends Document {
 }
 export interface AdapterUser extends IUser {
     id: string;
-  }
+}
   
