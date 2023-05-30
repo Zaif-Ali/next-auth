@@ -1,29 +1,22 @@
 // create user
 import { IUser } from '@/types/Global';
-import clientPromise from '@/database/connection';
+import connectDB from '@/database/connection';
+import UserModel from '@/model/User';
 
-export async function createUser(email: string, name: string, image: string): Promise<IUser> {
-    // database connection
-    const client = await clientPromise;
-    const db = client.db();
+export async function createUser(email: string, name: string, image: string) {
 
-
-    // user creation
-    const newUser = {
+    // user creation and others things are set as default
+    const newUser = new UserModel({
         email,
         name,
         image,
-        role: 'user',
-        gender: 'other',
-        emailVerified: false,
-    };
+    });
 
     try {
-        // inserting new user
-        const result = await db.collection('users').insertOne(newUser);
-        // console.log('New user created:', result);
-
-        return newUser as unknown as IUser;
+        const db = await connectDB();
+        const user : IUser = await newUser.save();
+        db.close();
+        return user;
     } catch (error) {
         console.error('Error creating user:', error);
         throw new Error('Failed to create user');

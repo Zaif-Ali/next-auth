@@ -4,6 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import { createUser } from '@/lib/CreateNewUser';
 import type { NextAuthOptions } from 'next-auth';
+import { IUser } from '@/types/Global';
 
 export const authOptions: NextAuthOptions = {
     // Secret String for tokens 
@@ -30,15 +31,13 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         // When user signIn 
         signIn: async ({ user, email, profile }) => {
-
             const userEmail = email || (profile?.email as string);
             const userName = profile?.name as string || "";
             // Check user existance
-            const { found, user: fetcheduser } = await checkUserExistence(userEmail as string);
+            const { found, user: fetcheduser }: { found: boolean, user: IUser | null } = await checkUserExistence(userEmail as string);            
             // if user was sign in first sigin
             if (!found) {
                 const createdUser = await createUser(userEmail as string, userName, user.image as string);
-                // console.log('New user created:', createdUser);
                 user.role = createdUser.role;
                 return true;
             } else {
@@ -52,14 +51,14 @@ export const authOptions: NextAuthOptions = {
         jwt: async ({ token, user }) => {
             if (user) {
                 token.role = user.role;
-                token.gender =  user.gender;
+                token.gender = user.gender;
                 token.user = {
                     _id: user.id,
                     email: user.email,
                     role: user.role,
                     name: user.name,
                     image: user.image,
-                    gender : user.gender
+                    gender: user.gender
                 };
             }
             return token;
@@ -72,7 +71,7 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
     },
-    
+
 };
 
 export default NextAuth(authOptions);

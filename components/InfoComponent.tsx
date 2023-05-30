@@ -9,7 +9,7 @@ const InfoComponent = () => {
           <div className="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
             <h2 className="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">
               Welcome to Final, where{" "}
-              <span className="font-extrabold">authentication</span> meets
+              <span className="font-extrabold text-purple-600">Authentication</span> meets
               simplicity
             </h2>
             <p className="mb-4 font-medium">

@@ -7,6 +7,9 @@ export interface IUser extends Document {
     image: string;
     role: string;
     gender: string;
+    followers : string[] ;
+    following : string[] ;
+    isVerified : boolean
 }
 export interface AdapterUser extends IUser {
     id: string;

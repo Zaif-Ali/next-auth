@@ -6,6 +6,7 @@ import SigninBTN from "./SignInBTN";
 import { useRouter } from "next/router";
 import { FcMenu } from "react-icons/fc";
 
+
 interface MenuLink {
   title: string;
   url: string;

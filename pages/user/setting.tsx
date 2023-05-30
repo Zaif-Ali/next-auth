@@ -1,7 +1,7 @@
 import Wrapper from "@/layout/Wrapper";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import useUser from "@/hooks/User";
 interface Props {}
@@ -42,7 +42,7 @@ interface FormData {
 export const UserInput = () => {
   const { data: session } = useSession();
   const { UpdateUser, isloading } = useUser();
-  
+
   const initialFormData: FormData = {
     name: session?.user.name as string,
     gender: session?.user.gender as string,
@@ -157,9 +157,9 @@ export const UserImage = () => {
   const { data: session } = useSession();
 
   return (
-    <div className=" bg-gray-50 dark:bg-gray-800   rounded-lg p-8 md:p-12">
+    <div className=" bg-gray-50 dark:bg-gray-800   rounded-lg p-8 md:p-12 flex justify-center items-center">
       {/* User Image  */}
-      <div className="relative border-white dark:border-gray-700 rounded-full h-40 w-40 object-contain object-center z-10 ">
+      <div className="relative border-white dark:border-gray-700 rounded-full h-56 w-56 object-contain object-center z-10 ">
         <Image
           src={session?.user.image as string}
           alt={session?.user.name as string}

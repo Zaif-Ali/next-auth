@@ -1,21 +1,20 @@
 // user existance
-import clientPromise from '@/database/connection';
+import connectDB from '@/database/connection';
+import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
-import { Collection } from 'mongodb';
+
 
 
 async function checkUserExistence(email: string): Promise<{ found: boolean; user: IUser | null }> {
     // Retunred values 
     let found = false;
     let user: IUser | null = null;
-    
+
     try {
-        // make connection and get collection
-        const client = await clientPromise;
-        const collection: Collection<IUser> = client.db().collection('users');
-
-        user = await collection.findOne({ email });
-
+        // make connection 
+        const db = await connectDB();
+        user = await UserModel.findOne({ email });
+        db.close();
         if (user) {
             found = true;
         }

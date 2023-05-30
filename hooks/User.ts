@@ -1,6 +1,7 @@
 import { IUser } from "@/types/Global";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface FormData {
     firstName?: string;
@@ -34,8 +35,11 @@ const useUser = () => {
         try {
             const response = await axios.post("/api/user/UpdateUser", { email, formData: changedFields });
             const data = response.data;
-            setError(data.error)
-            setisloading(false);
+            if (!data.success) {
+                setError(data.error)
+            } else {
+                toast.success("Data was updated. After few time you see changes")
+            }
         } catch (error: any) {
             setError(error.message);
         } finally {
