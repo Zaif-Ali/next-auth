@@ -1,8 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import useUser from "@/hooks/User";
 import { NextPage } from "next";
-import { useEffect } from "react";
-
 import { useRouter } from "next/router";
 import Wrapper from "@/layout/Wrapper";
 import UserImageonProfile from "@/components/UserImageonProfile";
@@ -12,15 +9,9 @@ interface Props {}
 const UserProfile: NextPage<Props> = ({}) => {
   // get the use email from the slug
   const router = useRouter();
-  const { slug } = router.query;
   // use useUser(custom hook) to manuplate or get the information of the user
-  const { Error, isloading, user, GetUser } = useUser();
+
   const { data: session } = useSession();
-  useEffect(() => {
-    if (slug) {
-      GetUser(slug as string);
-    }
-  }, [slug]);
 
   return (
     <Wrapper>
@@ -31,15 +22,15 @@ const UserProfile: NextPage<Props> = ({}) => {
         >
           {/* image  */}
           <UserImageonProfile
-            ImageSRC={user?.image as string}
-            ImageALT={user?.name as string}
+            ImageSRC={session?.user.image as string}
+            ImageALT={session?.user?.name as string}
           />
           {/* content */}
           <div className=" flex flex-col justify-center items-center p-3 space-y-3">
             <div className="font-bold font-sans text-3xl dark:text-white">
-              {user?.name}
+              {session?.user?.name}
             </div>
-            <div className="text-xl font-sans opacity-90">{user?.email}</div>
+            <div className="text-xl font-sans opacity-90">{session?.user?.email}</div>
             <div className="text-sm  flex flex-col md:flex-row items-center">
               <span>200 Follwers</span>
               <span className="hidden md:block text-lg text-gray-500 dark:text-gray-400 px-1 font-extrabold">

@@ -23,7 +23,7 @@ const UserDropDown: NextPage<Props> = ({}) => {
   const menuLinks = [
     {
       title: "Profile",
-      url: `/user/profile/${session?.user.email}`,
+      url: `/user/profile/my`,
       icon: <AiOutlineUser />,
       isProtected: false,
     },
