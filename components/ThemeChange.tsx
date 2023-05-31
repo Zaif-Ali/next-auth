@@ -17,25 +17,14 @@ const ThemeChange = () => {
   }, []);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
-  const renderThemeChanger = () => {
-    if (!mounted) return null;
+ 
 
+  const HandleChangeTheme = () => {
+    if (!mounted) return null;
     if (currentTheme === "dark") {
-      return (
-        <ImSun
-          className="w-5 h-5 text-yellow-300 "
-          role="button"
-          onClick={() => setTheme("light")}
-        />
-      );
+      setTheme("light");
     } else {
-      return (
-        <BsFillMoonFill
-          className="w-5 h-5 text-white "
-          role="button"
-          onClick={() => setTheme("dark")}
-        />
-      );
+      setTheme("dark");
     }
   };
 
@@ -44,16 +33,23 @@ const ThemeChange = () => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div
-              className={`z-30 fixed rounded-full right-3 bottom-4 p-3 ${
-                currentTheme === "dark" ? "bg-gray-900" : "bg-gray-900"
+            <button
+              className={`z-30 fixed  right-3 bottom-4 rounded-full p-2    ${
+                currentTheme === "dark" ? " bg-gray-800" : "bg-gray-900"
               }`}
+              onClick={HandleChangeTheme}
             >
-              {renderThemeChanger()}
-            </div>
+              {currentTheme === "dark" ? (
+                <ImSun className=" w-5 h-5 " />
+                ) : (
+                <BsFillMoonFill className="fill-gray-50 w-5 h-5 " />
+              )}
+            </button>
           </TooltipTrigger>
           <TooltipContent>
-            <span className=" text-sm right-8 bottom-0 ">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+            <span className={` text-sm right-8 bottom-0 pb-2 font-semibold ${currentTheme === "dark" ? "text-yellow-300 " : ""}`}>
+              {theme === "dark" ? "Light" : "Dark"}
+            </span>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
