@@ -14,6 +14,7 @@ const useUser = () => {
     const [isloading, setisloading] = useState<Boolean>(false);
     const [user, setuser] = useState<IUser | null>(null);
     const [Error, setError] = useState<string | null>(null);
+    
 
     // Get User function whose take the email
     const GetUser = async (email: string) => {
@@ -48,6 +49,6 @@ const useUser = () => {
     }
 
     // return all the valus 
-    return { GetUser, UpdateUser, Error, isloading, user }
+    return { GetUser, UpdateUser, Error, isloading, user  }
 }
 export default useUser;

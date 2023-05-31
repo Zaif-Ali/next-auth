@@ -34,16 +34,24 @@ export const authOptions: NextAuthOptions = {
             const userEmail = email || (profile?.email as string);
             const userName = profile?.name as string || "";
             // Check user existance
-            const { found, user: fetcheduser }: { found: boolean, user: IUser | null } = await checkUserExistence(userEmail as string);            
+            const { found, user: fetcheduser }: { found: boolean, user: IUser | null } = await checkUserExistence(userEmail as string);
             // if user was sign in first sigin
             if (!found) {
                 const createdUser = await createUser(userEmail as string, userName, user.image as string);
                 user.role = createdUser.role;
+                user.emailVerified = createdUser.emailVerified;
+                user.followers = createdUser.followers;
+                user.following = createdUser.following;
+                user.isVerified = createdUser.isVerified;
                 return true;
             } else {
                 // set user role in the user.role for acessing in the pages
                 user.role = fetcheduser?.role as string;
                 user.gender = fetcheduser?.gender as string;
+                user.emailVerified = fetcheduser?.emailVerified as boolean;
+                user.followers = fetcheduser?.followers as string[];
+                user.following = fetcheduser?.following as string[];
+                user.isVerified = fetcheduser?.isVerified as boolean;
                 return true;
             }
         },
@@ -52,13 +60,21 @@ export const authOptions: NextAuthOptions = {
             if (user) {
                 token.role = user.role;
                 token.gender = user.gender;
+                token.emailVerified = user.emailVerified;
+                token.followers = user.followers;
+                token.following = user.following;
+                token.isVerified = user.isVerified;
                 token.user = {
                     _id: user.id,
                     email: user.email,
                     role: user.role,
                     name: user.name,
                     image: user.image,
-                    gender: user.gender
+                    gender: user.gender,
+                    emailVerified: user.emailVerified,
+                    followers: user.followers,
+                    following: user.following,
+                    isVerified: user.isVerified,
                 };
             }
             return token;

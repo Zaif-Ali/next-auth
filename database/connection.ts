@@ -1,11 +1,16 @@
-import mongoose, { Connection } from "mongoose";
-
+import mongoose, { Connection } from 'mongoose';
 
 export default async function connectDB(): Promise<Connection> {
-    
-    mongoose.set('strictQuery', true);
+    try {
+          await mongoose.connect(process.env.MONGODB_URI!, {
+            useNewUrlParser: true,
+        } as any);
 
-    const db = await mongoose.connect(process.env.MONGODB_URI!)
 
-    return db.connection;
+
+        return mongoose.connection;
+    } catch (error: any) {
+        console.error(error.message);
+        process.exit(1);
+    }
 }
