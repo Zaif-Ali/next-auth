@@ -4,6 +4,8 @@ import Wrapper from "@/layout/Wrapper";
 import { NextPage } from "next";
 
 import UseAllUsers from "@/hooks/useAllUsers";
+import SK_UserCard from "@/components/skeleton/SK_UserCard";
+import SearchDropdown, { SearchBar } from "@/components/SearchDropdown";
 
 interface Props {}
 
@@ -11,22 +13,24 @@ const VeiwUsers: NextPage<Props> = ({}) => {
   const { error, loading, users } = UseAllUsers();
 
   return (
-    <Wrapper>
-      <div>{error}</div>
-      {loading ? (
-        <div className="flex flex-col items-center pb-5 py-2">
-          <div className="w-20 h-20 mb-3 rounded-full bg-gray-300"></div>
-          <div className="w-32 h-4 mt-2 bg-gray-300 rounded-full"></div>
-          <div className="w-24 h-4 mt-2 bg-gray-300 rounded-full"></div>
-          <div className="w-32 h-4 mt-2 bg-gray-300 rounded-full"></div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-3">
-          {users?.map((EachUser, key) => {
+    <Wrapper className="pt-6">
+      <div className="flex flex-col-reverse md:flex-row items-end md:items-center md:space-x-3 ">
+        <SearchDropdown />
+        <SearchBar/>
+      </div>
+      <Wrapper className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
+        {loading ? (
+          <>
+            {Array.from({ length: 6 }, (_, index) => (
+              <SK_UserCard key={index} />
+            ))}
+          </>
+        ) : (
+          users?.map((EachUser, key) => {
             return <UserCard key={key} EachUser={EachUser} />;
-          })}
-        </div>
-      )}
+          })
+        )}
+      </Wrapper>
     </Wrapper>
   );
 };

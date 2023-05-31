@@ -24,7 +24,7 @@ export default async function handler(
             console.log("Connected");
             const totalCount = await UserModel.countDocuments({});
             const users = await UserModel.find({})
-                .select('name email image')
+                .select('name email image isVerified')
             console.log(users);
             
             console.log("fetched")

@@ -1,7 +1,8 @@
-import { IUser } from "@/types/Global";
+import { IUser, RootState } from "@/types/Global";
 import axios from "axios";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 
 const UseAllUsers = () => {
@@ -9,14 +10,19 @@ const UseAllUsers = () => {
     const [error, setError] = useState<string | null>(null);
     const [users, setusers] = useState<IUser[] | null>(null);
 
+
+    // get the current state value
+    const { FilterValue, SearchValue, Refresh } = useSelector(
+        (state: RootState) => state.persistedReducer.filteruser
+    );
+
+
     const GetAll = async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get("/api/user/LimitUsers");
-            console.log("Response");
-            console.log(response);
-            const data = response.data;
+            const response = await axios.get(`/api/user/LimitUsers?value=${FilterValue}&search=${SearchValue}`);
+            const data = await response.data;
             setusers(data.users);
         } catch (err: any) {
             if (err.response && err.response.data) {
@@ -32,7 +38,7 @@ const UseAllUsers = () => {
     };
     useEffect(() => {
         GetAll();
-    }, []);
+    }, [FilterValue, SearchValue, Refresh]);
 
     return { loading, error, GetAll, users };
 };
