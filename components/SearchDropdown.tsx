@@ -14,6 +14,7 @@ interface RadioOption {
   label: string;
   value: string;
 }
+
 export const options: RadioOption[] = [
   { label: "All", value: "All" },
   { label: "Verified", value: "Verified" },

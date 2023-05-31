@@ -7,9 +7,11 @@ import { useRouter } from "next/navigation";
 import { FiSettings } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import React from "react";
-interface Props {}
+interface Props {
+  setisDropDown : any
+}
 
-const UserDropDown: NextPage<Props> = ({}) => {
+const UserDropDown: NextPage<Props> = ({setisDropDown}) => {
   // Rourer Hook
   const router = useRouter();
   // Handle Sign out
@@ -49,7 +51,7 @@ const UserDropDown: NextPage<Props> = ({}) => {
   return (
     <div
       className={` 
-z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-col rounded-xl py-6 text-white shadow-lg focus:outline-none bg-gray-900 dark:bg-white`}
+z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-col rounded-xl py-6 text-white shadow-lg focus:outline-none bg-gradient-to-b from-[#8E2DE2] to-[#4A00E0] `}
     >
       <div className="mb-4 flex gap-4 px-6 text-sm">
         {session?.user.image && (
@@ -63,10 +65,10 @@ z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-co
           </div>
         )}
         <div>
-          <p className="font-medium text-stone-300 dark:text-stone-700  ">
+          <p className="font-medium text-stone-100   ">
             {session?.user.name || "User name"}
           </p>
-          <p className="text-stone-400">{session?.user.email}</p>
+          <p className="dark:text-gray-300">{session?.user.email}</p>
         </div>
       </div>
       <div className="flex flex-col ">
@@ -76,17 +78,18 @@ z-10  top-10  absolute right-0  mt-1 flex w-60 md:w-96  origin-top-right flex-co
             <Link
               href={link.url}
               key={indes}
-              className="inline-flex items-center justify-between gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500 hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300"
+              onClick={() => setisDropDown(false)}
+              className="inline-flex items-center justify-between gap-6 px-[34px] py-2 text-sm text-gray-300  hover:text-gray-50"
             >
               {link.title}
-              <span className="text-lg text-gray-400 dark:text-gray-500">
+              <span className="text-lg text-gray-200  ">
                 {link.icon}
               </span>
             </Link>
           );
         })} 
         <button
-          className="inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500 hover:bg-gray-700 dark:hover:bg-gray-200 hover:text-gray-300"
+          className="inline-flex items-center gap-6 px-[34px] py-2 text-sm text-red-300  hover:text-red-400"
           onClick={handleSignOut}
         >
           Log out

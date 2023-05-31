@@ -8,7 +8,6 @@ import UserDropDown from "./UserDropDown";
 interface Props {}
 
 export const UserImage: NextPage<Props> = ({}) => {
-  
   // Get user data
   const { data: session, status } = useSession();
 
@@ -55,7 +54,9 @@ export const UserImage: NextPage<Props> = ({}) => {
                   </>
                 )}
               </button>
-              <div>{isDropDown && <UserDropDown />}</div>
+              <div>
+                {isDropDown && <UserDropDown setisDropDown={setisDropDown} />}
+              </div>
             </div>
           </>
         )}

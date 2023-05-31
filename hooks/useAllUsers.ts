@@ -38,7 +38,8 @@ const UseAllUsers = () => {
     };
     useEffect(() => {
         GetAll();
-    }, [FilterValue, SearchValue, Refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [FilterValue, SearchValue]);
 
     return { loading, error, GetAll, users };
 };
