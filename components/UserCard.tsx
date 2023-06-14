@@ -2,15 +2,28 @@ import { IUser } from "@/types/Global";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
 import { MdOutlineVerified } from "react-icons/md";
-
+import CardModal from "./modal/CardModal";
+import { useClickOutside } from "@mantine/hooks";
 interface Props {
   EachUser: IUser;
 }
 
 const UserCard: NextPage<Props> = ({ EachUser }) => {
+  const ref = useClickOutside(() => setIsOpen(false)); 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
   return (
-    <>
+    <button type="button" onClick={openModal}  >
+      <CardModal closeModal={closeModal} isOpen={isOpen}  />
       <div
         className="w-full max-w-sm  border dark:border-0 border-gray-200 rounded-lg 
       shadow-xl dark:shadow-2xl  dark:border-gray-700 dark:bg-gradient-to-b dark:from-[#8E2DE2] dark:to-[#4A00E0] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-100 "
@@ -36,7 +49,7 @@ const UserCard: NextPage<Props> = ({ EachUser }) => {
           </span>
         </div>
       </div>
-    </>
+    </button>
   );
 };
 

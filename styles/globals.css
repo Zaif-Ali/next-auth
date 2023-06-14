@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
-  @apply dark:bg-gray-900
+  @apply dark:bg-gray-900;
+}
+
+.ql-toolbar {
+  @apply rounded-lg mb-4 bg-slate-200 dark:bg-gray-800  w-fit;
+}
+
+.ql-editor {
+  @apply text-gray-600 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 rounded-xl text-lg;
+}
+.ql-container {
+  @apply rounded-lg;
+}
+
+.ql-editor code {
+  @apply border text-gray-700 font-thin py-2 px-2 bg-gray-900 dark:bg-gray-700;
 }

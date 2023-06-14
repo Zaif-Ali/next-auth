@@ -24,5 +24,6 @@ export interface IF_FilterUserArray {
 export interface RootState {
     persistedReducer: {
         filteruser: IF_FilterUserArray
+        filterBlogs: IF_FilterUserArray
     };
 }

@@ -7,5 +7,4 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: "class", 
-  plugins: [],
 }

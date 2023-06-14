@@ -6,7 +6,7 @@ import { reducer } from "./ReducerCombine";
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ['filteruser'],
+    whitelist: ['filteruser , filterBlogs'],
     // whitelist: ['filteruser'],
     // only the auth state values will be persisted, while the other state value will  not be persisted.
     // blacklist: ['filteruser'],
