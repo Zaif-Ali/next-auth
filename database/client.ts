@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb'
+declare const global: { [key: string]: any };
 
 if (!process.env.MONGODB_URI) {
     throw new Error('Invalid environment variable: "MONGODB_URI"')
