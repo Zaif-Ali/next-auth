@@ -1,4 +1,4 @@
-import connectDB from "@/database/connection";
+import clientPromise from "@/database/client";
 import Blog from "@/model/Blog";
 import { HttpStatusCode } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -18,16 +18,16 @@ export default async function FetchBlogs(req: NextApiRequest, res: NextApiRespon
       try {
         let { page, limit }: PaginationParams = req.query as any;
 
-        limit = limit ?? 6;
+        limit = limit ?? 8;
 
         const cacheKey = `blogs-${page}_${limit}`;
         const cachedData = cache.get(cacheKey);
         // if the data was reterived
         if (cachedData) {
+          console.log("Present in the cache")
           return res.status(HttpStatusCode.Ok).send(cachedData);
         }
-        // if the data was not present in the cache
-        const db = await connectDB();
+        
         const skip = (page - 1) * limit;
         const blogs = await Blog.find()
           .select("title excerpt slug")
@@ -37,7 +37,7 @@ export default async function FetchBlogs(req: NextApiRequest, res: NextApiRespon
           .lean() // Use the lean() method to return plain JavaScript objects instead of Mongoose documents
           .exec();
 
-        db.close();
+
 
         const reducedBlogs = blogs.map((blog) => ({
           title: blog.title,
@@ -46,7 +46,7 @@ export default async function FetchBlogs(req: NextApiRequest, res: NextApiRespon
         }));
 
         // Saving blogs
-        cache.set(cacheKey, reducedBlogs, 500); // Set cache expiry
+        cache.set(cacheKey, reducedBlogs, 800); // Set cache expiry
 
         return res.status(HttpStatusCode.Ok).json(reducedBlogs);
       } catch (error: any) {

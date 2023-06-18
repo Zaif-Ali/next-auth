@@ -1,8 +1,8 @@
-import connectDB from '@/database/connection';
 import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { HttpStatusCode } from "axios";
+import clientPromise from '@/database/client';
 type Data = {
     users?: IUser[] | any;
     totalCount?: number;
@@ -18,7 +18,7 @@ export default async function handler(
 ) {
     if (req.method === 'GET') {
         try {
-            const db = await connectDB();
+            
             //    console.log(db);
             let { value, search } = req.query;
             let Users = [];
@@ -58,14 +58,14 @@ export default async function handler(
             }
 
 
-            db.close();
-            return res.status(200).json({
+            
+            return res.status(HttpStatusCode.Ok).json({
                 users: Users,
                 // totalCount,
                 success: true,
             });
         } catch (error: any) {
-            return res.status(500).json({
+            return res.status(HttpStatusCode.InternalServerError).json({
                 error: error.message,
                 success: false
             });

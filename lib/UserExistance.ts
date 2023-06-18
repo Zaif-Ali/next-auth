@@ -1,5 +1,5 @@
 // user existance
-import connectDB from '@/database/connection';
+import clientPromise from '@/database/client';
 import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
 
@@ -11,10 +11,7 @@ async function checkUserExistence(email: string): Promise<{ found: boolean; user
     let user: IUser | null = null;
 
     try {
-        // make connection 
-        const db = await connectDB();
         user = await UserModel.findOne({ email });
-        db.close();
         if (user) {
             found = true;
         }

@@ -1,5 +1,6 @@
 // api/user/TotalUsers
-import connectDB from '@/database/connection';
+import clientPromise from '@/database/client';
+import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -16,9 +17,9 @@ export default async function handler(
     switch (request.method) {
         case 'GET':
             try {
-                const db = await connectDB();
-                const TotlaNumber = await db.collection<IUser>('users').countDocuments();
-                db.close();
+                
+                const TotlaNumber = await UserModel.countDocuments();
+                
                 return response.status(200).json({
                     TotlaNumber,
                     success: false

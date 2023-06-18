@@ -1,7 +1,8 @@
 // create user
 import { IUser } from '@/types/Global';
-import connectDB from '@/database/connection';
+// import connectDB from '@/database/connection';
 import UserModel from '@/model/User';
+import clientPromise from '@/database/client';
 
 export async function createUser(email: string, name: string, image: string) {
 
@@ -13,9 +14,7 @@ export async function createUser(email: string, name: string, image: string) {
     });
 
     try {
-        const db = await connectDB();
         const user : IUser = await newUser.save();
-        db.close();
         return user;
     } catch (error) {
         console.error('Error creating user:', error);

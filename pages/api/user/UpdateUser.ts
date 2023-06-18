@@ -2,10 +2,9 @@
 import checkUserExistence from '@/lib/UserExistance';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import clientPromise from '@/database/connection';
 import { UpdateResult } from 'mongodb';
-import connectDB from '@/database/connection';
 import UserModel from '@/model/User';
+import clientPromise from '@/database/client';
 // Response Type
 type Data = {
     error?: string | null,
@@ -77,8 +76,7 @@ async function updateUser(user: IUser, formData: Partial<IUser>) {
         }
     }
 
-    // Establish a connection to the database
-    await connectDB();
+    
 
     // Update the user in the database using the updateOne method
     const updateResult: UpdateResult = await UserModel.updateOne(

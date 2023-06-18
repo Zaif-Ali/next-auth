@@ -16,9 +16,7 @@ const BlogLayout = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(
-        `/api/Blog/FetchBlogs?page=${page}`
-      );
+      const res = await axios.get(`/api/Blog/FetchBlogs?page=${page}`);
       const newBlogs = await res.data;
       setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs]);
       setPage((prevPage) => prevPage + 1);
@@ -44,8 +42,12 @@ const BlogLayout = () => {
         dataLength={blogs.length}
         next={FetchBlogs}
         hasMore={hasMore}
-        loader={<p>Loading...</p>}
-        endMessage={<p>No more data to load.</p>}
+        loader={
+          <div className=" flex justify-center items-center   ">
+            <span className="  py-2 px-2">Scroll down to read more</span>
+          </div>
+        }
+        endMessage={<p></p>}
       >
         <div className="grid grid-cols-2  gap-10">
           {blogs.map((blog: IBlog, index: number) => (
