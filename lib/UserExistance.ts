@@ -1,5 +1,6 @@
 // user existance
 import clientPromise from '@/database/client';
+import connectDB from '@/database/connect';
 import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
 
@@ -9,6 +10,9 @@ async function checkUserExistence(email: string): Promise<{ found: boolean; user
     // Retunred values 
     let found = false;
     let user: IUser | null = null;
+    
+    const client = await clientPromise;
+    const db = client.db("users");
 
     try {
         user = await UserModel.findOne({ email });

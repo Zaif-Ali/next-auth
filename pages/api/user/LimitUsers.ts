@@ -2,7 +2,7 @@ import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { HttpStatusCode } from "axios";
-import clientPromise from '@/database/client';
+import connectDB from '@/database/connect';
 type Data = {
     users?: IUser[] | any;
     totalCount?: number;
@@ -12,10 +12,10 @@ type Data = {
 
 
 
-export default async function handler(
+const handler = async(
     req: NextApiRequest,
     res: NextApiResponse<Data>
-) {
+) =>{
     if (req.method === 'GET') {
         try {
             
@@ -74,3 +74,4 @@ export default async function handler(
 
     return res.status(404).json({ error: 'Method not found', success: false });
 }
+export default connectDB(handler);

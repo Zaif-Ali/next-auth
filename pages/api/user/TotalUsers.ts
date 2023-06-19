@@ -1,5 +1,6 @@
 // api/user/TotalUsers
 import clientPromise from '@/database/client';
+import connectDB from '@/database/connect';
 import UserModel from '@/model/User';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -10,10 +11,10 @@ type Data = {
     error?: string
 }
 
-export default async function handler(
+const  handler = async (
     request: NextApiRequest,
     response: NextApiResponse<Data>
-) {
+) => {
     switch (request.method) {
         case 'GET':
             try {
@@ -38,3 +39,4 @@ export default async function handler(
             })
     }
 }
+export default connectDB(handler);

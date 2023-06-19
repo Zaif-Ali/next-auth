@@ -4,7 +4,7 @@ import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { UpdateResult } from 'mongodb';
 import UserModel from '@/model/User';
-import clientPromise from '@/database/client';
+import connectDB from '@/database/connect';
 // Response Type
 type Data = {
     error?: string | null,
@@ -13,10 +13,10 @@ type Data = {
     user?: IUser | null
 }
 
-export default async function handler(
+const handler = async (
     request: NextApiRequest,
     response: NextApiResponse<Data>
-) {
+) => {
     switch (request.method) {
         case 'POST':
             try {
@@ -37,7 +37,7 @@ export default async function handler(
                 await updateUser(user, formData);
                 // Get the user again from the database
                 const { user: update } = await checkUserExistence(email) as { user: IUser };
-               // Send Response 
+                // Send Response 
                 return response.status(200).json({
                     success: true,
                     error: null,
@@ -57,7 +57,7 @@ export default async function handler(
             return response.status(404).json({ error: 'Method not found', success: false })
     }
 }
-
+export default connectDB(handler);
 
 async function updateUser(user: IUser, formData: Partial<IUser>) {
     // Create an object to store the fields to be updated
@@ -76,7 +76,7 @@ async function updateUser(user: IUser, formData: Partial<IUser>) {
         }
     }
 
-    
+
 
     // Update the user in the database using the updateOne method
     const updateResult: UpdateResult = await UserModel.updateOne(

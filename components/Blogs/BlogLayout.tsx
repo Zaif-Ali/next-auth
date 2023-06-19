@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import useBlog, { IBlog } from "@/hooks/useBlog";
-import EachBlog from "./EachBlog";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Wrapper from "@/layout/Wrapper";
+import EBlog from "./EBlog";
+
 
 const BlogLayout = () => {
   const { FetchBlogs, hasMore, blogs } = useBlog();
@@ -25,13 +26,16 @@ const BlogLayout = () => {
         }
         endMessage={<p></p>}
       >
-        <div className="grid grid-cols-2  gap-10">
+        <div className="grid md:grid-cols-2  gap-8">
           {blogs.map((blog: IBlog, index: number) => (
-            <EachBlog
+            <EBlog
               key={blog._id}
               title={blog.title}
               excerpt={blog.excerpt}
               slug={blog.slug}
+              name = {blog.author.name}
+              image = {blog.author.image}
+              date = {blog.createdAt}
             />
           ))}
         </div>

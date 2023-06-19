@@ -6,6 +6,9 @@ import clientPromise from '@/database/client';
 
 export async function createUser(email: string, name: string, image: string) {
 
+    const client = await clientPromise;
+    const db = client.db("users");
+
     // user creation and others things are set as default
     const newUser = new UserModel({
         email,

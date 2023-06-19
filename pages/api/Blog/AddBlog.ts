@@ -1,10 +1,10 @@
-import connectDB from "@/database/connection";
+import connectDB from "@/database/connect";
 import checkUserExistence from "@/lib/UserExistance";
 import Blog from "@/model/Blog";
 import { HttpStatusCode } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function AddBlog(req: NextApiRequest, res: NextApiResponse) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (req.method) {
         case 'POST':
@@ -17,7 +17,7 @@ export default async function AddBlog(req: NextApiRequest, res: NextApiResponse)
                     message: "User not found",
                 });
             }
-            const db = await connectDB();
+            
             let newBlog;
             try {
                 newBlog = new Blog({
@@ -41,7 +41,7 @@ export default async function AddBlog(req: NextApiRequest, res: NextApiResponse)
                     error: error.message
                 })
             }
-            await db.close();
+            
             return res.status(HttpStatusCode.Created).json({ error: 'Blog Added', success: true });
 
 
@@ -50,3 +50,4 @@ export default async function AddBlog(req: NextApiRequest, res: NextApiResponse)
 
     }
 }
+export default connectDB(handler);

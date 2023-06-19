@@ -1,26 +1,26 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/types/Global";
+import { FIBlog } from "@/model/Blog";
 
 export interface IBlog {
   _id: string;
   title: string;
   excerpt: string;
   slug: string;
-}
-
-interface FetchResult {
-  blogs: IBlog[];
-  cursor: string | null;
+  author: {
+    name: string,
+    image: string
+  },
+  createdAt : string
 }
 
 const useBlog = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [blogs, setBlogs] = useState<IBlog[]>([]);
+  const [blog, setBlog] = useState<FIBlog | null>(null);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const { data: session } = useSession();
@@ -74,7 +74,25 @@ const useBlog = () => {
     }
   };
 
-  return { addBlog, loading, error, blogs, FetchBlogs, hasMore };
+  const FetchBlog = async (slug: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.get(`/api/Blog/GetParticularBlog?slug=${slug}`);
+      const data = await res.data;
+      setBlog(data);
+    } catch (err: any) {
+      if (err.response && err.response.data) {
+        setError(err.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again later.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return { addBlog, loading, error, blogs, FetchBlogs, hasMore, FetchBlog, blog };
 };
 
 export default useBlog;

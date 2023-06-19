@@ -1,5 +1,6 @@
 
 // api/users/GetUser
+import connectDB from '@/database/connect';
 import checkUserExistence from '@/lib/UserExistance';
 import { IUser } from '@/types/Global';
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -12,10 +13,10 @@ type Data = {
     email? : string | null;
 }
 
-export default async function handler(
+const handler = async (
     request: NextApiRequest,
     response: NextApiResponse<Data>
-) {
+) => {
     // this handler only work for the post request
     switch (request.method) {
         case 'POST':
@@ -37,3 +38,4 @@ export default async function handler(
 
     }
 }
+export default connectDB(handler);

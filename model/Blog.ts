@@ -1,6 +1,18 @@
 import mongoose, { Schema } from 'mongoose';
 import slugify from 'slugify';
 
+export interface FIBlog {
+    title: string,
+    slug: string,
+    excerpt: string,
+    content: string,
+    author: mongoose.Schema.Types.ObjectId
+    Likes: number,
+    authorname: string,
+    authoremail: string,
+    likedBy: mongoose.Schema.Types.ObjectId
+}
+
 const blogSchema: Schema = new Schema({
     title: {
         type: String,
