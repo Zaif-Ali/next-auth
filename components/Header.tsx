@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import SigninBTN from "./SignInBTN";
 import { useRouter } from "next/router";
 import { FcMenu } from "react-icons/fc";
-
+import { useClickOutside } from "@mantine/hooks";
 
 interface MenuLink {
   title: string;
@@ -16,7 +16,6 @@ interface MenuLink {
 interface Props {}
 
 const Header: NextPage<Props> = ({}) => {
-  
   const [isNavbarHidden, setIsNavbarHidden] = useState(true);
   const router = useRouter();
   const { data: session } = useSession();
@@ -28,6 +27,8 @@ const Header: NextPage<Props> = ({}) => {
   const closeMenu = () => {
     setIsNavbarHidden(true);
   };
+  // Detect user click outside of the navbar
+  const ref = useClickOutside(() => setIsNavbarHidden(true));
 
   const menuLinks: MenuLink[] = [
     { title: "Home", url: "/", isProtected: false },
@@ -40,7 +41,7 @@ const Header: NextPage<Props> = ({}) => {
   );
   return (
     <>
-      <div className=" pb-20 ">
+      <div className=" pb-20 " ref={ref}>
         <nav className="top-0 w-full fixed backdrop-filter backdrop-blur-3xl md:backdrop-blur-lg z-50">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             {/* Main name */}
