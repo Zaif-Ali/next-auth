@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 await newBlog.save();
 
             } catch (error: any) {
-                return res.status(HttpStatusCode.BadRequest).json({
+                return res.status(HttpStatusCode.InternalServerError).json({
                     message: "Error in while saving Blog",
                     success: false,
                     error: error.message

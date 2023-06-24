@@ -10,7 +10,7 @@ type Data = {
     message?: string | null,
     user?: IUser | null,
     found?: boolean,
-    email? : string | null;
+    email?: string | null;
 }
 
 const handler = async (
@@ -19,14 +19,14 @@ const handler = async (
 ) => {
     // this handler only work for the post request
     switch (request.method) {
-        case 'POST':
+        case 'GET':
             try {
                 // get the email from the request body
-                const { email } = request.body;
+                const email = request.query.email as string;
                 // get the user from the function
                 const { found, user } = await checkUserExistence(email);
                 // sending resposne
-                return response.status(200).json({ error: null, message: email, user, found , email });
+                return response.status(200).json({ error: null, message: email, user, found, email });
             } catch (error: any) {
                 // if any error occur 
                 return response.status(500).json({ error: error.message })

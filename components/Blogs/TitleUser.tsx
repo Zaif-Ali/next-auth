@@ -6,8 +6,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import useUser from "@/hooks/User";
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FollowUserButton } from "../FollowBTN";
 
 interface Props {
   authorname: string;
@@ -97,9 +99,12 @@ export const UserContent = ({ authoremail }: { authoremail: string }) => {
               </div>
             </div>
             <div className="py-3 flex flex-col items-center">
-              <button className="py-1 w-full text-2xl font-medium  text-gray-100 rounded-lg bg-blue-600">
-                Follow{" "}
-              </button>
+              {/* Follow button  */}
+              <FollowUserButton
+                PersonIdentifier={user?.email as string}
+                PersonId = {user?._id as string}
+                followingList={user?.following as string[]}
+              />
               <div className="  text-center w-52 pt-3 font-medium">
                 {user?.name as string} have a {user?.followers.length}{" "}
                 <span className="text-[#8E2DE2] dark:text-indigo-200  -tracking-tighter  font-medium scroll-m-20">
@@ -117,3 +122,5 @@ export const UserContent = ({ authoremail }: { authoremail: string }) => {
     </div>
   );
 };
+
+

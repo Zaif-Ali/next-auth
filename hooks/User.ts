@@ -14,13 +14,13 @@ const useUser = () => {
     const [isloading, setisloading] = useState<Boolean>(false);
     const [user, setuser] = useState<IUser | null>(null);
     const [Error, setError] = useState<string | null>(null);
-    
+    const [status, setstatus] = useState<string | null>();
 
     // Get User function whose take the email
     const GetUser = async (email: string) => {
         setisloading(true);
         try {
-            const response = await axios.post("/api/user/GetUser", { email });
+            const response = await axios.get(`/api/user/GetUser?email=${email}`);
             const data = response.data;
             setuser(data.user);
         } catch (error: any) {
@@ -48,7 +48,26 @@ const useUser = () => {
         }
     }
 
+    const FollowUser = async (followerId: string) => {
+        setisloading(true);
+        try {
+            const response = await axios.post("/api/user/FollowUser", {
+                followerId,
+            });
+            const data = response.data;
+            if (data.success) {
+                setstatus("Following list is updated");
+                setuser(data.user);
+            }
+
+        } catch (error: any) {
+            setError(error.message);
+        } finally {
+            setisloading(false);
+        }
+    }
+
     // return all the valus 
-    return { GetUser, UpdateUser, Error, isloading, user  }
+    return { GetUser, UpdateUser, FollowUser, Error, isloading, user }
 }
 export default useUser;
