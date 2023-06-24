@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import styles from "./../../styles/index.module.css";
+import EBlog from "@/components/Blogs/EBlog";
+import FeaturedBlogs from "@/components/Blogs/FeaturedBlogs";
+import TitleUser from "@/components/Blogs/TitleUser";
+import { IBlog } from "@/hooks/useBlog";
 import Wrapper from "@/layout/Wrapper";
 import { FIBlog } from "@/model/Blog";
 import axios from "axios";
 import { NextPage, GetServerSideProps } from "next";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import EBlog from "@/components/Blogs/EBlog";
-import styles from "./../../styles/index.module.css";
 import { useTheme } from "next-themes";
-import FeaturedBlogs from "@/components/Blogs/FeaturedBlogs";
-import { IBlog } from "@/hooks/useBlog";
-
-import TitleUser from "@/components/Blogs/TitleUser";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface Props {
   blog: FIBlog;
@@ -49,6 +48,7 @@ const Blog: NextPage<Props> = ({ blog, featuredBlogs }) => {
               authorImage={blog.author.image}
               authorjoiningdate={blog.author.createdAt}
               authorname={blog.authorname}
+              authoremail={blog.authoremail}
             />
           </div>
 

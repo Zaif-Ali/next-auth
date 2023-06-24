@@ -39,10 +39,10 @@
 }
 
 .Content ul {
-  @apply max-w-md space-y-1 list-disc list-inside;
+  @apply max-w-md space-y-1 list-disc list-inside text-xl;
 }
 .Content ol {
-  @apply max-w-md space-y-1  list-decimal list-inside;
+  @apply max-w-md space-y-1  list-decimal list-inside text-xl;
 }
 
 .darkContent {
@@ -50,7 +50,7 @@
 }
 
 .darkContent ul {
-  @apply decoration-slice;
+  @apply decoration-slice text-xl;
 }
 .darkContent p {
   @apply px-3 pb-3 py-2 text-lg;
@@ -76,10 +76,10 @@
 }
 
 .darkContent ul {
-  @apply max-w-md space-y-1 list-disc list-inside text-gray-200;
+  @apply max-w-md space-y-1 list-disc list-inside text-gray-200 text-xl;
 }
 .darkContent ol {
-  @apply max-w-md space-y-1  list-decimal list-inside text-gray-200;
+  @apply max-w-md space-y-1  list-decimal list-inside text-gray-200 text-xl;
 }
 
 .darkContent a {

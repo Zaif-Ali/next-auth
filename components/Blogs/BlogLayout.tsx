@@ -26,7 +26,7 @@ const BlogLayout = () => {
         }
         endMessage={<p></p>}
       >
-        <div className="grid md:grid-cols-2  gap-8">
+        <Wrapper className="grid md:grid-cols-2  gap-8">
           {blogs.map((blog: IBlog, index: number) => (
             <EBlog
               key={index}
@@ -38,7 +38,7 @@ const BlogLayout = () => {
               date = {blog.createdAt}
             />
           ))}
-        </div>
+        </Wrapper>
       </InfiniteScroll>
     </Wrapper>
   );
