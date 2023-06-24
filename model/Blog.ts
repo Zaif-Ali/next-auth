@@ -2,22 +2,29 @@ import mongoose, { Schema } from 'mongoose';
 import slugify from 'slugify';
 
 export interface FIBlog {
+    _id: string;
     title: string,
     slug: string,
     excerpt: string,
     content: string,
-    author: mongoose.Schema.Types.ObjectId
+    author: {
+        _id: string,
+        createdAt: any,
+        image: string
+    },
     Likes: number,
     authorname: string,
     authoremail: string,
-    likedBy: mongoose.Schema.Types.ObjectId
+    likedBy: mongoose.Schema.Types.ObjectId,
+    createdAt : string
 }
 
 const blogSchema: Schema = new Schema({
     title: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        index: 'text'
     },
     slug: {
         type: String,

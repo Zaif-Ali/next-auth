@@ -1,0 +1,95 @@
+.Title {
+  @apply font-bold text-4xl pb-8 px-3;
+}
+
+.Content ul {
+  @apply decoration-slice;
+}
+.Content p {
+  @apply px-2 pb-3 py-2 text-lg text-gray-900;
+}
+
+.Content h1 {
+  @apply text-4xl font-semibold;
+}
+.Content h2 {
+  @apply text-3xl font-semibold;
+}
+.Content h3 {
+  @apply text-2xl font-semibold;
+}
+.Content h4 {
+  @apply text-xl font-semibold;
+}
+.Content h5 {
+  @apply text-lg font-semibold;
+}
+.Content h6 {
+  @apply text-base font-semibold;
+}
+.Content a {
+  @apply text-blue-800 underline;
+}
+.Content blockquote {
+  @apply p-4 my-4 border-l-4 border-gray-300 leading-relaxed;
+}
+
+.Content pre {
+  @apply font-mono bg-gray-800  p-4 rounded-md text-gray-200 overflow-scroll md:overflow-visible;
+}
+
+.Content ul {
+  @apply max-w-md space-y-1 list-disc list-inside;
+}
+.Content ol {
+  @apply max-w-md space-y-1  list-decimal list-inside;
+}
+
+.darkContent {
+  @apply text-gray-300;
+}
+
+.darkContent ul {
+  @apply decoration-slice;
+}
+.darkContent p {
+  @apply px-3 pb-3 py-2 text-lg;
+}
+
+.darkContent h1 {
+  @apply text-4xl font-semibold text-gray-200;
+}
+.darkContent h2 {
+  @apply text-3xl font-semibold text-gray-200;
+}
+.darkContent h3 {
+  @apply text-2xl font-semibold text-gray-200;
+}
+.darkContent h4 {
+  @apply text-xl font-semibold text-gray-200;
+}
+.darkContent h5 {
+  @apply text-lg font-semibold text-gray-200;
+}
+.darkContent h6 {
+  @apply text-base font-semibold text-gray-200;
+}
+
+.darkContent ul {
+  @apply max-w-md space-y-1 list-disc list-inside text-gray-200;
+}
+.darkContent ol {
+  @apply max-w-md space-y-1  list-decimal list-inside text-gray-200;
+}
+
+.darkContent a {
+  @apply text-blue-300 underline;
+}
+.darkContent blockquote {
+  @apply p-4 my-4 border-l-4 border-gray-600 leading-relaxed;
+}
+
+.darkContent pre {
+  @apply font-mono bg-gray-700  p-4 rounded-md text-gray-200 
+  overflow-scroll md:overflow-visible;
+}

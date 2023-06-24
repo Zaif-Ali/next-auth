@@ -1,11 +1,12 @@
 
 import connectDB from "@/database/connect";
-import  { load } from "cheerio";
+import { load } from "cheerio";
 import Blog from "@/model/Blog";
 import { HttpStatusCode } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import NodeCache from "node-cache";
-import { formatDistanceToNow, addYears } from "date-fns";
+import { Measure_Date } from "@/lib/GetDate";
+
 
 interface PaginationParams {
   page: any;
@@ -45,30 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           .exec();
 
         const reducedBlogs = blogs.map((blog) => {
-          // Convert the date into the days or year format
-          const createdAt = new Date(blog.createdAt);
-          const now = new Date();
-          const daysSinceCreation = Math.round(
-            (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24) // Convert milliseconds to days
-          );
-
-          let createdAtLabel: string;
-          // Check if the blog was created today
-          if (daysSinceCreation < 1) {
-            createdAtLabel = "Today";
-          }
-          // Check if the blog was created more than or equal to 1 year ago
-          else if (daysSinceCreation >= 365) {
-            const yearsSinceCreation = Math.floor(daysSinceCreation / 365);
-            createdAtLabel = `${yearsSinceCreation} year${yearsSinceCreation > 1 ? "s" : ""} ago`;
-          }
-          // If the blog was created within the past year
-          else {
-            // Use the formatDistanceToNow function to generate a relative time label
-            createdAtLabel = formatDistanceToNow(createdAt, { addSuffix: true });
-          }
-
-
+          const createdAtLabel: string = Measure_Date(blog.createdAt);
           // convert the excerpt into plain text 
           const $ = load(blog.excerpt);
           const excerptPlainText = $.text().trim();

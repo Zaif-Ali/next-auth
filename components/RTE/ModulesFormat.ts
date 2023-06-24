@@ -5,7 +5,7 @@ export const modules = {
         ["bold", "italic", "underline", "strike", "blockquote"],
         [{ list: "ordered" }, { list: "bullet" }],
         ["link"],
-        ["code"],
+        ["code-block"],
         ["clean"],
         [{ multiLine: true }], // add this line to enable line breaks
         
@@ -26,8 +26,9 @@ export const modules = {
     "bullet",
     "link",
     "code-block",
-    "code",
+    
   ];
+  
   
   export const sanitizeOptions = {
     allowedTags: [
@@ -49,7 +50,7 @@ export const modules = {
       "ol",
       "li",
       "br",
-      "code",
+      "code-block",
     ],
     allowedAttributes: {
       a: ["href", "target"],

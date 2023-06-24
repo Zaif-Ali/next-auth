@@ -29,7 +29,7 @@ const BlogLayout = () => {
         <div className="grid md:grid-cols-2  gap-8">
           {blogs.map((blog: IBlog, index: number) => (
             <EBlog
-              key={blog._id}
+              key={index}
               title={blog.title}
               excerpt={blog.excerpt}
               slug={blog.slug}
