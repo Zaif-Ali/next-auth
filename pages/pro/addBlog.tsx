@@ -12,6 +12,7 @@ const AddBlog: NextPage<Props> = ({}) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [IsSubmit, setIsSubmit] = useState(false);
+
   const { addBlog, loading } = useBlog();
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ const AddBlog: NextPage<Props> = ({}) => {
 
   return (
     <Wrapper>
-            <Head>
+      <Head>
         <title>{` Add New Blogs || Final-Blog `}</title>
         <meta name="keywords" content="titla, meta, nextjs" />
         <meta name="author" content="Syamlal CM" />

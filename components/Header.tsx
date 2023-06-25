@@ -33,7 +33,7 @@ const Header: NextPage<Props> = ({}) => {
   const menuLinks: MenuLink[] = [
     { title: "Home", url: "/", isProtected: false },
     { title: "Blogs", url: "/Blogs", isProtected: false },
-    { title: "Create Content", url: "/addBlog", isProtected: true },
+    { title: "Create Content", url: "/pro/addBlog", isProtected: true },
   ];
 
   const filteredMenuLinks = menuLinks.filter(

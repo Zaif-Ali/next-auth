@@ -19,7 +19,13 @@ export async function middleware(request: NextRequest) {
             }
         } else if (request.nextUrl.pathname.startsWith('/user')) {
             if (token == null) {
-                return NextResponse.rewrite(Home);
+                return NextResponse.redirect(Home);
+            } else {
+                return NextResponse.next();
+            }
+        } else if (request.nextUrl.pathname.startsWith('/pro')) {
+            if (token == null) {
+                return NextResponse.redirect(Home);
             } else {
                 return NextResponse.next();
             }
@@ -34,5 +40,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/admin/:path*", "/user/:path*"],
+    matcher: ["/admin/:path*", "/user/:path*", "/pro/:path*"],
 };
