@@ -42,7 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 let StatusLiked: boolean = false;
                 if (isLiked) {
                     // If already liked, unlike the blog
-                    blog.likedBy = blog.likedBy.filter((user: any) => user.id === LoggedUserID);
+                    blog.likedBy = blog.likedBy.filter((user: any) => user.id !== LoggedUserID);
                     
                     StatusLiked = false
                 } else {

@@ -19,7 +19,7 @@ export const BlogInfoBTN = ({ blog }: { blog: FIBlog }) => {
   const { LikeBlog, blog: updatedBlog } = useBlog();
   const [BlogLike, setBlogLike] = useState<BTNState>({
     Btn_Style: "",
-    Icon: FcLike,
+    Icon: AiOutlineHeart,
     BlogLikes: 0,
   });
 
@@ -34,7 +34,9 @@ export const BlogInfoBTN = ({ blog }: { blog: FIBlog }) => {
     } else if (status === "authenticated") {
       // Set liked/unliked state
 
-      const isLiked = updatedBlog?.likedBy.includes(PersonId as string);
+      const isLiked = updatedBlog
+        ? updatedBlog?.likedBy.includes(PersonId as string)
+        : blog.likedBy.includes(PersonId as string);
 
       setBlogLike({
         Btn_Style: isLiked ? "" : "fill-red-500",
