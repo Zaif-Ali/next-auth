@@ -12,19 +12,21 @@ declare module 'next-auth' {
       image: string
       /** The user's role. */
       role: string,
-      gender : string,
-      emailVerified : boolean,
-      followers : string[],
-      following : string[],
-      isVerified : boolean
+      gender: string,
+      emailVerified: boolean,
+      followers: string[],
+      following: string[],
+      isVerified: boolean,
+      id: string
     }
   }
   interface User {
     role: string,
-    gender : string,
-    emailVerified : boolean,
-    followers : string[],
-    following : string[],
-    isVerified : boolean,
+    gender: string,
+    emailVerified: boolean,
+    followers: string[],
+    following: string[],
+    isVerified: boolean,
+    id: string
   }
 }

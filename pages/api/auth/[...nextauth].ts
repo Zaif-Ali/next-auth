@@ -43,6 +43,8 @@ export const authOptions: NextAuthOptions = {
                 user.followers = createdUser.followers;
                 user.following = createdUser.following;
                 user.isVerified = createdUser.isVerified;
+                user.id = createdUser._id;
+
                 return true;
             } else {
                 // set user role in the user.role for acessing in the pages
@@ -52,6 +54,7 @@ export const authOptions: NextAuthOptions = {
                 user.followers = fetcheduser?.followers as string[];
                 user.following = fetcheduser?.following as string[];
                 user.isVerified = fetcheduser?.isVerified as boolean;
+                user.id = fetcheduser?._id as string;
                 return true;
             }
         },
@@ -64,8 +67,10 @@ export const authOptions: NextAuthOptions = {
                 token.followers = user.followers;
                 token.following = user.following;
                 token.isVerified = user.isVerified;
+                token.id = user.id;
                 token.user = {
                     _id: user.id,
+                    id : user.id,
                     email: user.email,
                     role: user.role,
                     name: user.name,

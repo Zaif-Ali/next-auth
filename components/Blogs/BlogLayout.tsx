@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
-import useBlog, { IBlog } from "@/hooks/useBlog";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Wrapper from "@/layout/Wrapper";
 import EBlog from "./EBlog";
-
+import useBlog, { IBlog } from "@/hooks/useBlog";
+import Wrapper from "@/layout/Wrapper";
+import React, { useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const BlogLayout = () => {
   const { FetchBlogs, hasMore, blogs } = useBlog();
-
+  
   useEffect(() => {
     FetchBlogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,9 +32,9 @@ const BlogLayout = () => {
               title={blog.title}
               excerpt={blog.excerpt}
               slug={blog.slug}
-              name = {blog.author.name}
-              image = {blog.author.image}
-              date = {blog.createdAt}
+              name={blog.author.name}
+              image={blog.author.image}
+              date={blog.createdAt}
             />
           ))}
         </Wrapper>

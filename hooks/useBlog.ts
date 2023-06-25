@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { FIBlog } from "@/model/Blog";
 
 
 export interface IBlog {
@@ -13,15 +14,17 @@ export interface IBlog {
     name: string,
     image: string
   },
-  createdAt : string
+  createdAt: string
 }
 
 const useBlog = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [blogs, setBlogs] = useState<IBlog[]>([]);
+  const [blog, setBlog] = useState<FIBlog | null>();
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
+
   const { data: session } = useSession();
   const email = session?.user.email as string;
   // Add Blog
@@ -73,9 +76,28 @@ const useBlog = () => {
     }
   };
 
- 
 
-  return { addBlog, loading, error, blogs, FetchBlogs, hasMore };
+  const LikeBlog = async (BlogId: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post(`/api/Blog/LikeBlog`, {
+        BlogId
+      });
+      const data = response.data;
+      if (data.success) {
+        setBlog(data.blog);
+        return data.liked
+      }
+
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return { addBlog, LikeBlog, loading, error, blogs, FetchBlogs, hasMore, blog };
 };
 
 export default useBlog;

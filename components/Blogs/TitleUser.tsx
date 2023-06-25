@@ -6,10 +6,9 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import useUser from "@/hooks/User";
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FollowUserButton } from "../FollowBTN";
+import { FollowUserButton } from "../Button/FollowBTN";
 
 interface Props {
   authorname: string;
@@ -103,7 +102,7 @@ export const UserContent = ({ authoremail }: { authoremail: string }) => {
               <FollowUserButton
                 PersonIdentifier={user?.email as string}
                 PersonId = {user?._id as string}
-                followingList={user?.following as string[]}
+                followersList={user?.followers as string[]}
               />
               <div className="  text-center w-52 pt-3 font-medium">
                 {user?.name as string} have a {user?.followers.length}{" "}

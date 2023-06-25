@@ -15,7 +15,7 @@ export interface FIBlog {
     Likes: number,
     authorname: string,
     authoremail: string,
-    likedBy: mongoose.Schema.Types.ObjectId,
+    likedBy: string[],
     createdAt : string
 }
 
@@ -62,7 +62,7 @@ const blogSchema: Schema = new Schema({
     likedBy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }],
+    }]
 }, { timestamps: true });
 
 blogSchema.pre('save', function (next) {

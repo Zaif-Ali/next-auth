@@ -35,7 +35,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     const followerUser = await UserModel.findById(followerId);
                     followerUser.followers.pull(loggedUser.id);
                     await followerUser.save();
-
+                    
+                    
                     return res.json({
                         message: "Unfollowed successfully",
                         success: true,
@@ -50,6 +51,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     const followerUser = await UserModel.findById(followerId);
                     followerUser.followers.push(loggedUser.id);
                     await followerUser.save();
+
+                    
 
                     return res.json({
                         message: "Followed successfully",

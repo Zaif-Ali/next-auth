@@ -1,16 +1,17 @@
 import styles from "./../../styles/index.module.css";
-import EBlog from "@/components/Blogs/EBlog";
 import FeaturedBlogs from "@/components/Blogs/FeaturedBlogs";
 import TitleUser from "@/components/Blogs/TitleUser";
+import { BlogInfoBTN } from "@/components/Button/BlogInfoBTN";
 import { IBlog } from "@/hooks/useBlog";
 import Wrapper from "@/layout/Wrapper";
 import { FIBlog } from "@/model/Blog";
 import axios from "axios";
 import { NextPage, GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { MdArrowBack } from "react-icons/md";
 
 interface Props {
   blog: FIBlog;
@@ -23,6 +24,7 @@ const Blog: NextPage<Props> = ({ blog, featuredBlogs }) => {
   const { systemTheme, theme } = useTheme();
 
   const currentTheme = theme === "system" ? systemTheme : theme;
+  const { data: session } = useSession();
 
   return (
     <Wrapper>
@@ -36,14 +38,27 @@ const Blog: NextPage<Props> = ({ blog, featuredBlogs }) => {
           content={`Meta description for the ${slug} page`}
         />
       </Head>
-      <div className="flex flex-col ">
-        <div className="flex-wrap p-3 md:p-7 ">
-          <div className="flex flex-col   pb-12">
-            <div
-              dangerouslySetInnerHTML={{ __html: blog.title }}
-              className={styles.Title}
-            />
-
+      {/* Push back button  */}
+      <button
+        onClick={() => {
+          router.back();
+        }}
+        className=" rounded-full  text-gray-400 hover:text-gray-500 animate-accordion-up"
+      >
+        <MdArrowBack className="w-8 h-8" />
+      </button>
+      <div className="flex flex-col p-1 ">
+        <div className="flex-wrap p-3 md:p-4 ">
+          <div className="flex flex-col pb-10">
+            <div className="flex flex-col  justify-evenly pb-4">
+              <div
+                dangerouslySetInnerHTML={{ __html: blog.title }}
+                className={styles.Title}
+              />
+              {/* Blogs Information  */}
+              <BlogInfoBTN blog={blog} />
+            </div>
+            {/* Blog author Information */}
             <TitleUser
               authorImage={blog.author.image}
               authorjoiningdate={blog.author.createdAt}
@@ -51,7 +66,6 @@ const Blog: NextPage<Props> = ({ blog, featuredBlogs }) => {
               authoremail={blog.authoremail}
             />
           </div>
-
           <div
             className={` 
             
