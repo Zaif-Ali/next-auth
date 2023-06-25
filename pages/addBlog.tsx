@@ -2,6 +2,7 @@ import TextEditor from "@/components/RTE/TextEditor";
 import useBlog from "@/hooks/useBlog";
 import Wrapper from "@/layout/Wrapper";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -39,6 +40,16 @@ const AddBlog: NextPage<Props> = ({}) => {
 
   return (
     <Wrapper>
+            <Head>
+        <title>{` Add New Blogs || Final-Blog `}</title>
+        <meta name="keywords" content="titla, meta, nextjs" />
+        <meta name="author" content="Syamlal CM" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content={`Meta description for the Add New Blog Page`}
+        />
+      </Head>
       <div>
         <div className="pb-3">
           <label
