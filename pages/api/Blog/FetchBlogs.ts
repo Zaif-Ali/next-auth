@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         let { page, limit }: PaginationParams = req.query as any;
 
-        limit = limit ?? 8;
+        limit = limit ?? 6;
 
         const cacheKey = `blogs-${page}_${limit}`;
         const cachedData = cache.get(cacheKey);
