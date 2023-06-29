@@ -1,3 +1,4 @@
+import { UserApiConstants } from "@/constant/ApiConstrants";
 import { IUser } from "@/types/Global";
 import axios from "axios";
 import { useState } from "react";
@@ -20,7 +21,7 @@ const useUser = () => {
     const GetUser = async (email: string) => {
         setisloading(true);
         try {
-            const response = await axios.get(`/api/user/GetUser?email=${email}`);
+            const response = await axios.get(UserApiConstants.GetUser(email));
             const data = response.data;
             setuser(data.user);
         } catch (error: any) {
@@ -34,7 +35,7 @@ const useUser = () => {
     const UpdateUser = async ({ email, changedFields }: { email: string, changedFields: Partial<FormData> }) => {
         setisloading(true);
         try {
-            const response = await axios.post("/api/user/UpdateUser", { email, formData: changedFields });
+            const response = await axios.post(UserApiConstants.UpdateUser, { email, formData: changedFields });
             const data = response.data;
             if (!data.success) {
                 setError(data.error)
@@ -51,7 +52,7 @@ const useUser = () => {
     const FollowUser = async (followerId: string) => {
         setisloading(true);
         try {
-            const response = await axios.post("/api/user/FollowUser", {
+            const response = await axios.post(UserApiConstants.FollowUser, {
                 followerId,
             });
             const data = response.data;

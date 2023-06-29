@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { UserApiConstants } from '@/constant/ApiConstrants';
 
 
 const useDataCounter = () => {
@@ -11,7 +12,7 @@ const useDataCounter = () => {
         try {
             setLoading(true);
             setError(null);
-            const req = await axios.get('/api/user/TotalUsers');
+            const req = await axios.get(UserApiConstants.TotalUser);
             const data = await req.data;
             setUserCount(data.TotlaNumber);
             setLoading(false);

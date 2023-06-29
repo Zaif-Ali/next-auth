@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { FIBlog } from "@/model/Blog";
+import { BlogApiConstants } from "@/constant/ApiConstrants";
 
 
 export interface IBlog {
@@ -32,7 +33,7 @@ const useBlog = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.post("/api/Blog/AddBlog", {
+      const res = await axios.post(BlogApiConstants.AddBlog, {
         title,
         content,
         email,
@@ -60,7 +61,7 @@ const useBlog = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`/api/Blog/FetchBlogs?page=${page}`);
+      const res = await axios.get(BlogApiConstants.FetchBlogs(page));
       const newBlogs = await res.data;
       setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs]);
       setPage((prevPage) => prevPage + 1);
@@ -81,9 +82,7 @@ const useBlog = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`/api/Blog/LikeBlog`, {
-        BlogId
-      });
+      const response = await axios.post(BlogApiConstants.LikeBlog(BlogId));
       const data = response.data;
       if (data.success) {
         setBlog(data.blog);

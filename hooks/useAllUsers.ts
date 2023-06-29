@@ -1,3 +1,4 @@
+import { UserApiConstants } from "@/constant/ApiConstrants";
 import { IUser, RootState } from "@/types/Global";
 import axios from "axios";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -21,7 +22,7 @@ const UseAllUsers = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`/api/user/LimitUsers?value=${FilterValue}&search=${SearchValue}`);
+            const response = await axios.get(UserApiConstants.GetAllUser(FilterValue, SearchValue));
             const data = await response.data;
             setusers(data.users);
         } catch (err: any) {
@@ -38,7 +39,7 @@ const UseAllUsers = () => {
     };
     useEffect(() => {
         GetAll();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [FilterValue, SearchValue]);
 
     return { loading, error, GetAll, users };
